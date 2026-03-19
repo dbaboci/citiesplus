@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Coming Soon | Cities+",
-  description: "Something amazing is coming soon",
+  title: "cities+ | Cities, Data, AI",
+  description:
+    "cities+ is an NGO working on cities, urbanism, technology, data, and AI.",
 };
 
 export default function RootLayout({
