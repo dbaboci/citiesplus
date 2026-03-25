@@ -13,7 +13,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "cities+ | Cities, Data, AI",
+  title: "cities+",
   description:
     "cities+ is an NGO working on cities, urbanism, technology, data, and AI.",
 };

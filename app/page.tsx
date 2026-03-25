@@ -883,7 +883,7 @@ function MissionDetails() {
       <div ref={revealRef as any} className="section-shell reveal">
         <div className="section-head">
           <div>
-            <h2 className="eyebrow">Qëllimi Ynë</h2>
+            <h2 className="eyebrow">Misioni</h2>
           </div>
         </div>
         <div className="mission-grid">
@@ -1000,7 +1000,7 @@ function Methods() {
       <div ref={revealRef as any} className="section-shell reveal">
         <div className="section-head">
           <div>
-            <h2 className="eyebrow">Mënyrat e Veprimit</h2>
+            <h2 className="eyebrow">Metodat</h2>
           </div>
         </div>
         <div className="methods-grid">
