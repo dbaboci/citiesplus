@@ -23,7 +23,7 @@ body {
     radial-gradient(circle at top, rgba(80, 7, 120, 0.2), transparent 30%),
     linear-gradient(180deg, #050505 0%, #0f1114 42%, var(--paper) 42%, var(--paper) 100%);
   color: var(--ink);
-  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-main), sans-serif;
 }
 
 h1,
@@ -178,6 +178,7 @@ h1 {
   line-height: 0.95;
   letter-spacing: -0.05em;
   max-width: 10ch;
+  font-family: var(--font-display), sans-serif;
 }
 
 .lead {

@@ -1,30 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Building2,
   Cpu,
   Facebook,
-  Globe,
   Home,
   Instagram,
   Leaf,
   Linkedin,
   Menu,
-  Play,
   Search,
   Twitter,
   Users,
   X,
 } from "lucide-react";
+import sksqImage from "../assets/sksq.jpg";
 
 function GlobalStyles() {
   return (
     <style jsx global>{`
       :root {
-        --font-main: "Inter", sans-serif;
-        --font-display: "Outfit", sans-serif;
         --brand-red: #d62828;
         --brand-red-hover: #b22222;
       }
@@ -107,10 +105,10 @@ function GlobalStyles() {
       .nav-links a {
         text-decoration: none;
         color: #000;
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: 0.3em;
-        font-size: 10px;
+        text-transform: none;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        font-size: 0.92rem;
       }
 
       .nav-search {
@@ -141,28 +139,23 @@ function GlobalStyles() {
         text-decoration: none;
         color: #000;
         font-family: var(--font-display);
-        font-size: clamp(1.8rem, 5vw, 3rem);
+        font-size: clamp(2rem, 5vw, 3.25rem);
         line-height: 1.1;
+        font-weight: 400;
+        letter-spacing: 0.03em;
         padding: 14px 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
 
       .hero {
         position: relative;
-        min-height: 90vh;
+        min-height: 100vh;
+        min-height: 100svh;
         display: flex;
         align-items: center;
         background: #050505;
         overflow: hidden;
         padding-top: 108px;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.3));
-        z-index: 1;
       }
 
       .hero-image {
@@ -171,7 +164,7 @@ function GlobalStyles() {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.6;
+        opacity: 1;
         transform: scale(1.1);
       }
 
@@ -180,6 +173,14 @@ function GlobalStyles() {
         z-index: 2;
         width: min(1280px, calc(100% - 48px));
         margin: 0 auto;
+      }
+
+      .hero-text-panel {
+        width: fit-content;
+        max-width: min(760px, 100%);
+        padding: 28px 32px 32px;
+        background: rgba(0, 0, 0, 0.29);
+        border-radius: 6px;
       }
 
       .hero-kicker {
@@ -221,7 +222,7 @@ function GlobalStyles() {
 
       .hero-copy {
         max-width: 44rem;
-        color: rgba(255, 255, 255, 0.7);
+        color: #fff;
         font-size: clamp(1.05rem, 1.6vw, 1.25rem);
         line-height: 1.8;
         margin-bottom: 44px;
@@ -250,30 +251,6 @@ function GlobalStyles() {
         background: var(--brand-red-hover);
       }
 
-      .btn-secondary {
-        border: 0;
-        background: transparent;
-        color: #fff;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 11px;
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        padding: 0;
-      }
-
-      .btn-secondary .play-wrap {
-        width: 32px;
-        height: 32px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 999px;
-      }
-
       section {
         position: relative;
       }
@@ -288,6 +265,14 @@ function GlobalStyles() {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 96px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 0;
       }
 
       .sticky {
@@ -361,14 +346,6 @@ function GlobalStyles() {
         background: #fcfcfc;
         padding: 120px 0;
         overflow: hidden;
-      }
-
-      .fields-head {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 56px;
       }
 
       .field-title {
@@ -568,7 +545,7 @@ function GlobalStyles() {
       }
 
       .newsletter-title {
-        font-size: clamp(3rem, 7vw, 6.5rem);
+        font-size: clamp(2.1rem, 4.9vw, 4.55rem);
         margin-bottom: 24px;
       }
 
@@ -623,7 +600,7 @@ function GlobalStyles() {
 
       .footer-top {
         display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
+        grid-template-columns: 60% 20% 20%;
         gap: 48px;
         margin-bottom: 72px;
       }
@@ -730,14 +707,20 @@ function GlobalStyles() {
         }
 
         .hero {
-          min-height: auto;
+          min-height: 100vh;
+          min-height: 100svh;
           padding: 120px 0 72px;
+        }
+
+        .hero-text-panel {
+          width: 100%;
+          padding: 22px 22px 26px;
         }
 
         .mission-grid,
         .methods-grid,
         .footer-top,
-        .fields-head,
+        .section-head,
         .footer-bottom {
           grid-template-columns: 1fr;
           display: grid;
@@ -797,10 +780,10 @@ function Navbar() {
   }, []);
 
   const navLinks = [
+    { name: "Publikime", href: "#" },
     { name: "Misioni", href: "#misioni" },
     { name: "Fushat e Veprimit", href: "#fushat" },
     { name: "Metodat", href: "#metodat" },
-    { name: "Publikime", href: "#" },
     { name: "Kontakti", href: "#" },
   ];
 
@@ -854,37 +837,39 @@ function Hero() {
 
   return (
     <section className="hero">
-      <div className="absolute" />
-      <img
-        src="https://images.unsplash.com/photo-1570643904128-099e0337890f?auto=format&fit=crop&q=80&w=2200"
+      <Image
+        src={sksqImage}
         alt="Sheshi Skënderbej, Tiranë"
         className="hero-image"
-        style={{ transform: `translateY(${offset * 0.4}px) scale(1.1)` }}
+        fill
+        priority
+        sizes="100vw"
+        style={{
+          objectFit: "cover",
+          objectPosition: "center center",
+          transform: `translateY(${offset * 0.4}px) scale(1.1)`,
+        }}
       />
       <div className="hero-content">
-        <div className="hero-kicker reveal active">
-          <div className="hero-kicker-line" />
-          <span className="hero-kicker-text">Inovacioni Urban . Tiranë 2025</span>
-        </div>
+        <div className="hero-text-panel reveal active">
+          <div className="hero-kicker">
+            <div className="hero-kicker-line" />
+            <span className="hero-kicker-text">Inovacioni Urban</span>
+          </div>
 
-        <h1 className="hero-title reveal active">
-          Më shumë <span className="accent">hapësirë</span>, <br />
-          më shumë <span className="accent">jetë</span>.
-        </h1>
+          <h1 className="hero-title">
+            Më shumë <span className="accent">hapësirë</span>, <br />
+            më shumë <span className="accent">jetë</span>.
+          </h1>
 
-        <p className="hero-copy reveal active">
-          Qendra <strong>cities+</strong> promovon zhvillimin urban të qëndrueshëm në
-          Tiranë dhe më gjerë, duke integruar teknologjinë në qytetet e së ardhmes.
-        </p>
+          <p className="hero-copy">
+            Qendra <strong>cities+</strong> promovon zhvillimin urban të qëndrueshëm në
+            Tiranë dhe më gjerë, duke integruar teknologjinë në qytetet e së ardhmes.
+          </p>
 
-        <div className="hero-actions reveal active">
-          <button className="btn-primary">Eksploro Punën Tonë</button>
-          <button className="btn-secondary">
-            Shiko Vizionin
-            <span className="play-wrap">
-              <Play size={12} fill="currentColor" />
-            </span>
-          </button>
+          <div className="hero-actions">
+            <button className="btn-primary">Eksploro Punën Tonë</button>
+          </div>
         </div>
       </div>
     </section>
@@ -896,9 +881,13 @@ function MissionDetails() {
   return (
     <section id="misioni" className="mission">
       <div ref={revealRef as any} className="section-shell reveal">
+        <div className="section-head">
+          <div>
+            <h2 className="eyebrow">Qëllimi Ynë</h2>
+          </div>
+        </div>
         <div className="mission-grid">
           <div className="sticky">
-            <h2 className="eyebrow">Qëllimi Ynë</h2>
             <p className="mission-title">
               Ndërtimi i qyteteve më të <span className="accent">drejta</span> dhe të
               qëndrueshme.
@@ -966,7 +955,7 @@ function ActionFields() {
   return (
     <section id="fushat" className="fields">
       <div ref={revealRef as any} className="section-shell reveal">
-        <div className="fields-head">
+        <div className="section-head">
           <div>
             <h2 className="eyebrow">Fushat e Veprimit</h2>
             <h3 className="field-title">Sferat tona të ndikimit.</h3>
@@ -998,10 +987,10 @@ function ActionFields() {
 function Methods() {
   const revealRef = useReveal();
   const methods = [
-    "Organizimi i seminareve dhe forumeve ndërkombëtare.",
-    "Aktivitete edukative dhe trajnuese për të rinjtë.",
     "Aktivitete kërkimore dhe studimore strategjike.",
-    "Fushata sensibilizuese dhe avokim për reforma.",
+    "Seminare dhe forumeve ndërkombëtare.",
+    "Aktivitete edukative dhe trajnuese për të rinjtë.",
+    "Fushata sensibilizuese dhe advokim për reforma.",
     "Bashkëpunimi me institucione dhe universitetet.",
     "Inkurajimi i zhvillimit përmes granteve.",
   ];
@@ -1009,9 +998,13 @@ function Methods() {
   return (
     <section id="metodat" className="methods">
       <div ref={revealRef as any} className="section-shell reveal">
-        <div className="methods-grid">
+        <div className="section-head">
           <div>
             <h2 className="eyebrow">Mënyrat e Veprimit</h2>
+          </div>
+        </div>
+        <div className="methods-grid">
+          <div>
             <div className="methods-list">
               {methods.map((method, idx) => (
                 <div className="method-item" key={idx}>
@@ -1057,19 +1050,22 @@ function Footer() {
           </div>
 
           <div>
-            <h5 className="footer-label">Navigimi</h5>
+            <h5 className="footer-label">Menu</h5>
             <ul className="footer-list">
               <li>
-                <a href="#misioni">Rreth Nesh</a>
+                <a href="#">Publikime</a>
               </li>
               <li>
-                <a href="#fushat">Programet</a>
+                <a href="#misioni">Misioni</a>
               </li>
               <li>
-                <a href="#">Arkiva</a>
+                <a href="#fushat">Fushat e Veprimit</a>
               </li>
               <li>
-                <a href="#">Grante</a>
+                <a href="#metodat">Metodat</a>
+              </li>
+              <li>
+                <a href="#">Kontakti</a>
               </li>
             </ul>
           </div>
@@ -1085,12 +1081,10 @@ function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-bottom-links">
-            <span>© 2025 CITIES+ HUB</span>
-            <a href="#">POLITIKA E PRIVATËSISË</a>
+            <span>© 2026 CITIES+</span>
           </div>
           <div className="footer-bottom-links">
-            <Globe size={16} strokeWidth={2} />
-            <span>RRJETI GLOBAL URBAN</span>
+            <a href="#">POLITIKA E PRIVATËSISË</a>
           </div>
         </div>
       </div>
@@ -1112,12 +1106,7 @@ export default function App() {
 
       <section className="newsletter">
         <div ref={newsRef as any} className="newsletter-shell reveal">
-          <h2 className="newsletter-title">
-            Qëndroni të <span className="accent">informuar</span>.
-          </h2>
-          <p className="newsletter-text">
-            Regjistrohuni për të marrë lajmet e fundit mbi zhvillimin urban.
-          </p>
+          <h2 className="newsletter-title">Regjistrohu per te rejat e fundit</h2>
           <form className="newsletter-form">
             <input type="email" placeholder="Adresa juaj email" />
             <button type="submit">

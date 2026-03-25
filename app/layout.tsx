@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
+import { Quicksand, Raleway } from "next/font/google";
 import "./globals.css";
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-main",
+});
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export const metadata: Metadata = {
   title: "cities+ | Cities, Data, AI",
@@ -13,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${quicksand.variable} ${raleway.variable}`}>
       <body>{children}</body>
     </html>
   );
